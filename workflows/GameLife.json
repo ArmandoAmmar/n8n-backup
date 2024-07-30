@@ -1,0 +1,713 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tratar dados": {
+      "main": [
+        [
+          {
+            "node": "Resgatar Tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resgatar Tags": {
+      "main": [
+        [
+          {
+            "node": "Seleciona apenas a categoria",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seleciona apenas a categoria": {
+      "main": [
+        [
+          {
+            "node": "Trata Categoria",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trata Categoria": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Tratar dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-03-26T00:05:32.767Z",
+  "id": "54Hc6tn1ZMwCkJxu",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "GameLife",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "habitica-rpg",
+        "options": {}
+      },
+      "id": "511251a6-e6ce-4ba0-813e-85f51059ebbb",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        440
+      ],
+      "webhookId": "9a2b1188-0f7f-4a6d-be6a-25f7752e1cc7"
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "Tarefa",
+              "stringValue": "={{ $('Webhook').item.json.body.task.text }}"
+            },
+            {
+              "name": "Tipo",
+              "stringValue": "={{ $('Webhook').item.json.body.task.type }}"
+            },
+            {
+              "name": "Categoria",
+              "type": "arrayValue",
+              "arrayValue": "={{ $('Webhook').item.json.body.task.tags }}"
+            },
+            {
+              "name": "Dificuldade",
+              "type": "numberValue",
+              "numberValue": "={{ $('Webhook').item.json.body.task.priority }}"
+            },
+            {
+              "name": "Ouro",
+              "type": "numberValue",
+              "numberValue": "={{$('Webhook').item.json.body.user.stats.gp }} "
+            },
+            {
+              "name": "Habilidade",
+              "stringValue": "={{ $('Webhook').item.json.body.task.notes }}"
+            },
+            {
+              "name": "Valor",
+              "type": "numberValue",
+              "numberValue": "={{ ((($('Webhook').item.json.body.task.priority) / $('Webhook').item.json.body.task.tags.length)+1) * ($('Webhook').item.json.body.direction == \"up\" ? 1 : -1 ) }}"
+            },
+            {
+              "name": "Data",
+              "stringValue": "={{ $('Webhook').item.json.body.task.updatedAt }}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "ea89074e-ab9d-4d55-97d2-05668b757c1e",
+      "name": "Tratar dados",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        440,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Z6F_ENAi4sPuwWizDwRo_3RGAIP6XCQwQDtyfK1HE_A",
+          "mode": "list",
+          "cachedResultName": "gamelife",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z6F_ENAi4sPuwWizDwRo_3RGAIP6XCQwQDtyfK1HE_A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "personagem",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z6F_ENAi4sPuwWizDwRo_3RGAIP6XCQwQDtyfK1HE_A/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data": "={{ $json.Data }}",
+            "Tipo": "={{ $json.Tipo }}",
+            "Tarefa": "={{ $json.Tarefa }}",
+            "Categoria": "={{ $json.Categoria }}",
+            "Dificuldade": "={{ $json.Dificuldade }}",
+            "Nota": "={{ $json.Habilidade }}",
+            "Valor": "={{ $json.Valor }}",
+            "Ouro": "={{ $json.Ouro }}",
+            "Grupo": "={{ $json.Grupo }}",
+            "ID": "={{ $json.ID }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo",
+              "displayName": "Tipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tarefa",
+              "displayName": "Tarefa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Categoria",
+              "displayName": "Categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Grupo",
+              "displayName": "Grupo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Dificuldade",
+              "displayName": "Dificuldade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nota",
+              "displayName": "Nota",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Valor",
+              "displayName": "Valor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ouro",
+              "displayName": "Ouro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "49740ce5-4545-4991-9aa7-8dba9e1442cd",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.2,
+      "position": [
+        1380,
+        440
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YbpYfjyscjLTNa8B",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://habitica.com/api/v3/tags",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "e5f62d25-d064-46a8-98ad-40938130d7fd"
+            },
+            {
+              "name": "x-api-user",
+              "value": "07e86bcf-d295-4908-a393-6762b622a1b3"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d3c17648-c363-487e-b76e-28f1ffe074ae",
+      "name": "Resgatar Tags",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        640,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "categoria",
+              "type": "arrayValue",
+              "arrayValue": "={{ $('Tratar dados').item.json.Categoria }}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "6d4f1809-97c6-489a-afa3-7bd42141f1b4",
+      "name": "Seleciona apenas a categoria",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        820,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var strings = $input.first().json['categoria'];\n\nvar objetos = $('Resgatar Tags').first().json.data;\n\n\n\n// Exemplo de uso:\n// let grupos = {\"Corpo\":[\"Saúde\", \"Flexibilidade\", \"Organização\", \"Higiene\", \"Aparência\"],\n// \"Mente\":[\"Inteligência\", \"Responsabilidade\", \"Autoconhecimento\", \"Controle\", \"Criatividade\", \"Bem-estar\"],\n// \"Social\":[\"Aproximação\", \"Comunicação\", \"Carisma\", \"Riqueza\", \"Atenção\"]};\n\nlet grupos = {};\n\nfunction encontrarChavePorValor(valorProcurado) {\n    // Itera sobre as chaves do objeto\n    for (let chave in grupos) {\n        // Verifica se a chave é uma propriedade própria do objeto\n        if (grupos.hasOwnProperty(chave)) {\n            // Obtém a array correspondente à chave atual\n            let array = grupos[chave];\n            \n            // Verifica se o valor procurado está presente na array\n            if (array.includes(valorProcurado)) {\n                // Se encontrado, retorna a chave\n                return chave;\n            }\n        }\n    }\n    // Se não encontrou em nenhuma chave, retorna null\n    return null;\n}\n\n\nfunction substituirValorString() {\n  var result = [];\n    for (var i = 0; i < strings.length; i++) {\n        for (var j = 0; j < objetos.length; j++) {\n            if (objetos[j].id === strings[i]) {\n               result.push({... $('Tratar dados').first().json, \"Categoria\": objetos[j].name.toString(), \"Grupo\": encontrarChavePorValor(objetos[j].name.toString())})\n            }\n        }\n    }\n    return result;\n}\n\nreturn substituirValorString();"
+      },
+      "id": "eb32f479-a106-425c-8200-716b3f037f05",
+      "name": "Trata Categoria",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Z6F_ENAi4sPuwWizDwRo_3RGAIP6XCQwQDtyfK1HE_A",
+          "mode": "list",
+          "cachedResultName": "gamelife",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z6F_ENAi4sPuwWizDwRo_3RGAIP6XCQwQDtyfK1HE_A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1236606610,
+          "mode": "list",
+          "cachedResultName": "ouro",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z6F_ENAi4sPuwWizDwRo_3RGAIP6XCQwQDtyfK1HE_A/edit#gid=1236606610"
+        },
+        "options": {}
+      },
+      "id": "34585964-016f-4a85-a49f-981eb6a161b1",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        440
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YbpYfjyscjLTNa8B",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Z6F_ENAi4sPuwWizDwRo_3RGAIP6XCQwQDtyfK1HE_A",
+          "mode": "list",
+          "cachedResultName": "gamelife",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z6F_ENAi4sPuwWizDwRo_3RGAIP6XCQwQDtyfK1HE_A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1236606610,
+          "mode": "list",
+          "cachedResultName": "ouro",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z6F_ENAi4sPuwWizDwRo_3RGAIP6XCQwQDtyfK1HE_A/edit#gid=1236606610"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "2",
+            "Ouro": "={{ $('Webhook').item.json.body.user.stats.gp }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Ouro",
+              "displayName": "Ouro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "17358a33-da5f-43e1-b69c-748f6aac0de2",
+      "name": "Google Sheets2",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.2,
+      "position": [
+        1560,
+        440
+      ],
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YbpYfjyscjLTNa8B",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $json.Data }}",
+        "format": "X",
+        "outputFieldName": "ID",
+        "options": {
+          "includeInputFields": true
+        }
+      },
+      "id": "96012288-d4cc-4fb2-8f02-955647f0bb52",
+      "name": "Date & Time",
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        1180,
+        440
+      ]
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "connection": "Upgrade, keep-alive",
+            "host": "n8n.devesharp.com",
+            "x-real-ip": "172.70.126.140",
+            "x-forwarded-for": "34.41.179.86, 172.70.126.140",
+            "x-forwarded-proto": "https",
+            "x-request-uri": "/webhook/habitica-rpg",
+            "x-nginx-proxy": "true",
+            "content-length": "2122",
+            "accept-encoding": "gzip, br",
+            "cf-ray": "87348e2b6c832956-ORD",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "user-agent": "got (https://github.com/sindresorhus/got)",
+            "content-type": "application/json",
+            "cf-connecting-ip": "34.41.179.86",
+            "cdn-loop": "cloudflare",
+            "cf-ipcountry": "US"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "type": "scored",
+            "direction": "up",
+            "delta": 0.9350418328765349,
+            "task": {
+              "challenge": {},
+              "group": {
+                "completedBy": {},
+                "assignedUsers": []
+              },
+              "_id": "ff90dc2a-e6b7-4ce7-9ae7-c79b62414e48",
+              "up": true,
+              "down": false,
+              "counterUp": 2,
+              "counterDown": 0,
+              "frequency": "daily",
+              "history": [
+                {
+                  "date": 1712018686072,
+                  "value": 4.759112700885761,
+                  "scoredUp": 5,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712078694712,
+                  "value": 5.135902184642918,
+                  "scoredUp": 3,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712174107102,
+                  "value": 4.418379560502567,
+                  "scoredUp": 2,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712278360745,
+                  "value": 4.07650410167304,
+                  "scoredUp": 2,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712353797822,
+                  "value": 6.566143446234192,
+                  "scoredUp": 5,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712450615019,
+                  "value": 7.675059976019468,
+                  "scoredUp": 5,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712535780341,
+                  "value": 7.341745264801276,
+                  "scoredUp": 4,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712619219354,
+                  "value": 6.339530629208477,
+                  "scoredUp": 3,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712681644845,
+                  "value": 5.872123015757819,
+                  "scoredUp": 3,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712785117014,
+                  "value": 4.769320906446106,
+                  "scoredUp": 2,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712844509566,
+                  "value": 3.325381873165834,
+                  "scoredUp": 1,
+                  "scoredDown": 0
+                },
+                {
+                  "date": 1712938948246,
+                  "value": 3.5560203421409255,
+                  "scoredUp": 2,
+                  "scoredDown": 0
+                }
+              ],
+              "type": "habit",
+              "text": "Brincar com Moeda👛",
+              "notes": "Manipular Moeda",
+              "tags": [
+                "323b1ccf-f1b2-45ed-a6bb-64656afaa974",
+                "449b5ef7-8ded-4db8-833f-14f369be476c"
+              ],
+              "value": 3.5560203421409255,
+              "priority": 0.1,
+              "attribute": "str",
+              "reminders": [],
+              "byHabitica": false,
+              "createdAt": "2024-04-01T10:01:13.347Z",
+              "updatedAt": "2024-04-12T14:58:46.251Z",
+              "userId": "07e86bcf-d295-4908-a393-6762b622a1b3",
+              "id": "ff90dc2a-e6b7-4ce7-9ae7-c79b62414e48"
+            },
+            "user": {
+              "_tmp": {
+                "quest": {
+                  "progressDelta": 0.48622175309579774
+                }
+              },
+              "stats": {
+                "buffs": {
+                  "str": 4,
+                  "int": 4,
+                  "per": 4,
+                  "con": 4,
+                  "stealth": 0,
+                  "streaks": false,
+                  "seafoam": false,
+                  "shinySeed": false,
+                  "snowball": false,
+                  "spookySparkles": false
+                },
+                "training": {
+                  "con": 0,
+                  "str": -0.9401900097642726,
+                  "per": 0,
+                  "int": 0
+                },
+                "per": 0,
+                "int": 0,
+                "con": 0,
+                "str": 0,
+                "points": 9,
+                "class": "warrior",
+                "lvl": 9,
+                "gp": 59.341897910144,
+                "exp": 15,
+                "mp": 46,
+                "hp": 50,
+                "toNextLevel": 250,
+                "maxHealth": 50,
+                "maxMP": 46
+              },
+              "_id": "07e86bcf-d295-4908-a393-6762b622a1b3"
+            },
+            "webhookType": "taskActivity"
+          }
+        }
+      }
+    ],
+    "Trata Categoria": [
+      {
+        "json": {
+          "Tarefa": "Brincar com Moeda👛",
+          "Tipo": "habit",
+          "Categoria": "Flexibilidade",
+          "Dificuldade": 0.1,
+          "Ouro": 0,
+          "Habilidade": "Manipular Moeda",
+          "Valor": 0.005,
+          "Data": "2024-04-12T14:58:46.251Z",
+          "Grupo": "Corpo"
+        }
+      },
+      {
+        "json": {
+          "Tarefa": "Brincar com Moeda👛",
+          "Tipo": "habit",
+          "Categoria": "Criatividade",
+          "Dificuldade": 0.1,
+          "Ouro": 0,
+          "Habilidade": "Manipular Moeda",
+          "Valor": 0.005,
+          "Data": "2024-04-12T14:58:46.251Z",
+          "Grupo": "Mente"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-05-30T23:26:34.543Z",
+  "versionId": "22cf889a-9926-4369-892a-820cb2fc6658"
+}
