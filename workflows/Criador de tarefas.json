@@ -1,0 +1,400 @@
+{
+  "active": false,
+  "connections": {
+    "Form": {
+      "main": [
+        [
+          {
+            "node": "Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lists": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "process",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "process": {
+      "main": [
+        [
+          {
+            "node": "ClickUp1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-02-10T09:48:57.468Z",
+  "id": "swpUBubKf4bmoYTH",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Criador de tarefas",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "tarefas",
+        "formTitle": "Tarefas",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Lista",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Banco dos Imoveis"
+                  },
+                  {
+                    "option": "Coruja"
+                  },
+                  {
+                    "option": "Wallisting"
+                  },
+                  {
+                    "option": "CaveiraTips"
+                  },
+                  {
+                    "option": "Xpag"
+                  },
+                  {
+                    "option": "Matchspot"
+                  },
+                  {
+                    "option": "Zire"
+                  },
+                  {
+                    "option": "Site construtura - 28"
+                  },
+                  {
+                    "option": "Arquitetares"
+                  },
+                  {
+                    "option": "Matchspot"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Etiqueta"
+            },
+            {
+              "fieldLabel": "Tarefas",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b49663cd-2913-4aef-9033-b7e2b82170a4",
+      "name": "Form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2,
+      "position": [
+        240,
+        380
+      ],
+      "webhookId": "d65ad999-15d9-4dcc-b571-fe770bb37e3c"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "team": "9007023941",
+        "space": "=90130432196",
+        "folderless": true,
+        "list": "={{ $('If').item.json.id }}",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "assignees": [],
+          "content": "={{ $('process').item.json.description || \"\" }}",
+          "tags": "={{ $('process').item.json.label  }}"
+        }
+      },
+      "id": "d7d2d000-a98f-4b7d-8cfe-4d02f0fe4abc",
+      "name": "ClickUp1",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        400
+      ],
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "FiRYg3L9fuPFrJro",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "list",
+        "operation": "getAll",
+        "team": "9007023941",
+        "space": "90130432196",
+        "folderless": true,
+        "limit": "=50",
+        "filters": {
+          "archived": false
+        }
+      },
+      "id": "ada35682-3dd2-4150-acf7-10a0f58b15e6",
+      "name": "Lists",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        460,
+        380
+      ],
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "FiRYg3L9fuPFrJro",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "29d2bf45-01bb-4400-9d75-93b49fb65c74",
+              "leftValue": "={{ $('Form').item.json.Lista }}",
+              "rightValue": "={{ $json.name }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "2086971d-88b6-4e7a-a0ee-bdb8482e3e5b",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        820,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const entradaTexto = $('Form').first().json.Tarefas;\nfunction processarEntrada(entrada) {\n// Dividir as linhas da entrada\n    const linhas = entrada.split('\\n').filter(i => i != \"\");\n\n    // Inicializar a array de saída\n    const saida = [];\n\n\n    // Processar cada linha\n    linhas.forEach((linha, index) => {\n      let itemAtual = {\n                label: [$('Form').first().json.Etiqueta],\n                title: '',\n                description: '',\n                checklist: []\n                };\n            if (linha.trim().startsWith('[')) {\n     \n                \n                let etiquetas = extrairEtiqueta(linha);\n                etiquetas = etiquetas.forEach(el => {\n                    itemAtual.label.push(transformarTexto(el));\n                })\n                \n\n                itemAtual.title = extrairTitulo(linha);\n\n             saida.push(itemAtual);\n\n            }  else if (linha.trim().startsWith('-')) {    \n                 saida[saida.length-1].description = extrairDescricao(linha).replace(/\\\\n/g, '\\n');;\n            } else if(linha.trim(\"\").length == 0) {\n\n            }\n            else if(linha.trim().startsWith('*')) {\n               saida[saida.length-1].checklist.push(linha.replace('*', ''));\n               \n            } else {\n              itemAtual = {\n                label: [$('Form').first().json.Etiqueta],\n                title: '',\n                description: '',\n                checklist: []\n                };\n              \n                itemAtual.title = extrairTitulo(linha);\n              \n                saida.push(itemAtual);\n\n            }\n              \n    });\n    \n    console.log(\"🚀 ~ processarEntrada ~ saida:\", saida)\n    return saida;\n}\n\nfunction extrairEtiqueta(linha) {\n    // Extrai o texto entre colchetes e retorna em formato de título\n    const etiqueta = linha.match(/\\[([^\\]]+)\\]/);\n    \n    let etiquetas = etiqueta[1].split(','); \n    \n    etiquetas.forEach((item, index)=> {\n      return capitalizarPrimeiraLetra(item)\n    })\n    return etiquetas;\n}\n\nfunction extrairTitulo(linha) {\n    // Extrai o texto após \"]\" e remove espaços em branco adicionais\n    const titulo = linha.split(']').pop().trim();\n    return titulo;\n}\n\n\nfunction extrairDescricao(linha) {\n    // Extrai o texto após \"]\" e remove espaços em branco adicionais\n    const titulo = linha.split('-').pop().trim();\n    return titulo;\n}\n\nfunction capitalizarPrimeiraLetra(texto) {\n    return texto.charAt(0).toUpperCase() + texto.slice(1);\n}\n\nfunction transformarTexto(texto) {\n    // Transforma o texto em lowercase\n    const lowercaseTexto = texto.toLowerCase();\n\n    // Remove os acentos\n    const semAcentosTexto = lowercaseTexto.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\");\n\n    // Adiciona \"m:\" no começo do texto\n return semAcentosTexto;\n}\n\nreturn processarEntrada(entradaTexto);\n\n"
+      },
+      "id": "f8e98084-e3a0-41b4-b362-08fce0c2f7f3",
+      "name": "process",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "95b0bc86-60eb-4885-abaa-17fe21b77948",
+              "leftValue": "={{ $('process').item.json.checklist }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "array",
+                "operation": "lengthNotEquals",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "28e6776c-237b-458a-bfc3-f17cefa20c42",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1580,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "team": "9007023941",
+        "space": "90130432196",
+        "folderless": true,
+        "list": "={{ $json.lista }}",
+        "name": "={{ $json.name }}",
+        "additionalFields": {
+          "parentId": "={{ $json.id }}"
+        }
+      },
+      "id": "20c74ccd-d7bf-4807-9355-667c1c4849ae",
+      "name": "ClickUp",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        360
+      ],
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "FiRYg3L9fuPFrJro",
+          "name": "ClickUp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "id",
+              "stringValue": "={{ $json.id }}"
+            },
+            {
+              "name": "checklist",
+              "type": "arrayValue",
+              "arrayValue": "={{ $('process').item.json.checklist }}"
+            },
+            {
+              "name": "lista",
+              "stringValue": "={{ $json.list.id }}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "d8a42037-6aec-440d-850d-368d25a906bd",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        1860,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const newItems = [];\n\nfor (const item of items[0].json.checklist) {\n  newItems.push({json: {id: items[0].json.id , name: item, lista: items[0].json.lista}});\n\n}\n\nreturn newItems;"
+      },
+      "id": "3e3f7a83-11f1-4e18-b773-6f2c4c6cc227",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2120,
+        360
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-02-11T13:45:03.582Z",
+      "updatedAt": "2024-02-11T13:45:03.582Z",
+      "id": "YyRoeQcGcVbGZRYV",
+      "name": "clickup"
+    },
+    {
+      "createdAt": "2024-02-11T13:45:08.607Z",
+      "updatedAt": "2024-02-11T13:45:08.607Z",
+      "id": "pn2k7bzIbiBll38k",
+      "name": "devesharp"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2024-04-10T13:52:17.962Z",
+  "versionId": "5e0f2d1c-0669-4ff3-b722-96882198d6c5"
+}
