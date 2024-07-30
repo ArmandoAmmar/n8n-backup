@@ -1,0 +1,100 @@
+{
+  "active": false,
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-02-15T19:52:07.172Z",
+  "id": "Zt7LshTAoddzrf4k",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Tarefas Coruja",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour",
+              "minute": 59
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1YJ12eLueYhVVSkRcorj3DahIPfvfTGH-ubUrrkK3yQ22WTk6kh1uDLl-35mS42OFI-4fmwp1",
+          "mode": "list",
+          "cachedResultName": "Arquivo (File responses)",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1YJ12eLueYhVVSkRcorj3DahIPfvfTGH-ubUrrkK3yQ22WTk6kh1uDLl-35mS42OFI-4fmwp1"
+        },
+        "event": "fileCreated",
+        "options": {
+          "fileType": "all"
+        }
+      },
+      "id": "0ab77690-de54-4d1c-aa26-4a94a1198ebd",
+      "name": "Google Drive Trigger",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        620,
+        300
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "h914h0hai0ekeEkB",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.webViewLink }}",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "e85615a4-aec7-41b8-9415-6bd881ca6f14",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YbpYfjyscjLTNa8B",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-02-16T16:51:38.912Z",
+  "versionId": "82b309fe-0d3c-48c3-b3c9-ef9e09b88450"
+}
