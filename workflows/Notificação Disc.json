@@ -1,0 +1,699 @@
+{
+  "active": true,
+  "connections": {
+    "Discord": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Encontrou a Key?": {
+      "main": [
+        [
+          {
+            "node": "Deploy é igual?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB3": {
+      "main": [
+        [
+          {
+            "node": "Discord2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "MongoDB3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Entrada": {
+      "main": [
+        [
+          {
+            "node": "Encontrar Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discord2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "MongoDB2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Discord1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deploy é igual?": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "MongoDB4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "MongoDB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB1": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "MongoDB1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discord1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Encontrar Key": {
+      "main": [
+        [
+          {
+            "node": "Encontrou a Key?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-02-26T17:17:26.075Z",
+  "id": "YeaQQMPEWjCAKT1I",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Notificação Disc",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $('Entrada').item.json.body.message }}",
+        "options": {
+          "wait": true
+        }
+      },
+      "id": "7996e36f-126d-4d80-9d98-e15729a60148",
+      "name": "Discord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        660
+      ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "UHW1GcenOAsXDzAv",
+          "name": "CD_CI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "ad76828c-362f-4d62-85ef-d1d8ca74788a",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "5945f8bd-db63-4fc8-906e-c81f24e45784",
+      "name": "Encontrou a Key?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        840,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://discord.com/api/webhooks/1211412653956792411/WIJWmaoULAPfq-D1kGuU0jyh6qmpOftaIFRjtSUxPImYkTHeorOqmJavFqYEap5gI8Wr/messages/{{ $json.id }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "deu"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e7379345-c14d-4b39-9fd6-e0b47dc4f383",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1680,
+        120
+      ],
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "findOneAndUpdate",
+        "collection": "=discordMessage",
+        "updateKey": "key",
+        "fields": "deploy",
+        "options": {}
+      },
+      "id": "c0dc17f3-800c-4985-8ac8-002e314424dc",
+      "name": "MongoDB3",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        320
+      ],
+      "credentials": {
+        "mongoDb": {
+          "id": "BV59xVNWHYTv5MO1",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "key",
+              "stringValue": "={{ $('Entrada').item.json.body.key }}"
+            },
+            {
+              "name": "deploy",
+              "stringValue": "={{ $('Entrada').item.json.body.deploy }}"
+            },
+            {
+              "name": "message",
+              "stringValue": "{{ $('Entrada').item.json.body.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a245a78f-b700-4aaa-bfc5-3d80b2bf12f7",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        1240,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "findOneAndUpdate",
+        "collection": "discordMessage",
+        "updateKey": "=key",
+        "fields": "channel,lastMessage",
+        "options": {}
+      },
+      "id": "ca21eb75-8545-4a89-ae42-23f881ca0d03",
+      "name": "MongoDB2",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        660
+      ],
+      "credentials": {
+        "mongoDb": {
+          "id": "BV59xVNWHYTv5MO1",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "discord-beto",
+        "options": {}
+      },
+      "id": "2f0a6ade-2cca-4448-b55c-a9c8e45a020f",
+      "name": "Entrada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        360,
+        340
+      ],
+      "webhookId": "e5aec572-4aa7-408b-bb7e-dce46577d411"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $('Entrada').item.json.body.message }}",
+        "options": {
+          "wait": true
+        }
+      },
+      "id": "8c18d486-473c-4428-8238-2babb82b79b5",
+      "name": "Discord2",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        320
+      ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "UHW1GcenOAsXDzAv",
+          "name": "CD_CI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "lastMessage",
+              "stringValue": "={{ $json.id }}"
+            },
+            {
+              "name": "channel",
+              "stringValue": "={{ $json.channel_id }}"
+            },
+            {
+              "name": "key",
+              "stringValue": "={{ $('MongoDB1').item.json.key}}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "9b553180-4841-4b41-b027-7a73fdba8f2f",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        1880,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://discord.com/api/webhooks/1211412653956792411/WIJWmaoULAPfq-D1kGuU0jyh6qmpOftaIFRjtSUxPImYkTHeorOqmJavFqYEap5gI8Wr/messages/{{ $('Encontrar Key').item.json.lastMessage }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $('Encontrar Key').item.json.content + \"\\n\"+$('Entrada').item.json.body.message}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e37fc30b-3afa-4fea-95d6-6ca534652f76",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1240,
+        120
+      ],
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "ca8ac4f9-7d91-441f-9c64-d57a24d3b7d6",
+              "leftValue": "={{ $('Entrada').item.json.body.deploy }}",
+              "rightValue": "={{ $('Encontrar Key').item.json.deploy }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "bfc047bf-24a6-4d34-b546-888dba2e0c68",
+      "name": "Deploy é igual?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1020,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "findOneAndUpdate",
+        "collection": "discordMessage",
+        "updateKey": "=key",
+        "fields": "content",
+        "options": {}
+      },
+      "id": "194582b8-04de-4189-aec7-732852731359",
+      "name": "MongoDB4",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        120
+      ],
+      "credentials": {
+        "mongoDb": {
+          "id": "BV59xVNWHYTv5MO1",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "content",
+              "stringValue": "={{ $('Encontrar Key').item.json.content + \"\\n\"+$('Entrada').item.json.body.message}}"
+            },
+            {
+              "name": "key",
+              "stringValue": "={{ $('Entrada').item.json.body.key }}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "ded0aa59-0d25-4fd3-b8af-5d34f61351a8",
+      "name": "Edit Fields4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        1880,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "lastMessage",
+              "stringValue": "={{ $json.id }}"
+            },
+            {
+              "name": "channel",
+              "stringValue": "={{ $json.channel_id }}"
+            },
+            {
+              "name": "key",
+              "stringValue": "={{ $('MongoDB3').item.json.key}}"
+            },
+            {
+              "name": "content",
+              "stringValue": "={{ $('Entrada').item.json.body.message }}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "8cef48b1-873c-40f5-b705-7dddadfab40f",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        1880,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "discordMessage",
+        "fields": "key,deploy,content",
+        "options": {}
+      },
+      "id": "5749dfa1-bc2d-43e0-a289-7fef00cdd955",
+      "name": "MongoDB1",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        660
+      ],
+      "credentials": {
+        "mongoDb": {
+          "id": "BV59xVNWHYTv5MO1",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "key",
+              "stringValue": "={{ $('Entrada').item.json.body.key }}"
+            },
+            {
+              "name": "deploy",
+              "stringValue": "={{ $('Entrada').item.json.body.deploy }}"
+            },
+            {
+              "name": "content",
+              "stringValue": "={{ $('Entrada').item.json.body.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ba13e231-089b-4891-8ffd-dfb83e6acc2d",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        1240,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ \"\\n\" + $('Entrada').item.json.body.message }}",
+        "options": {
+          "wait": true
+        }
+      },
+      "id": "877c0e44-1795-45b3-96dd-0ce17cdd53fd",
+      "name": "Discord1",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1460,
+        120
+      ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "UHW1GcenOAsXDzAv",
+          "name": "CD_CI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "collection": "discordMessage",
+        "options": {},
+        "query": "={\n\"key\": \"{{ $json.body.key }}\"\n}"
+      },
+      "id": "903ff174-4770-4add-af65-13196cc54f23",
+      "name": "Encontrar Key",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [
+        620,
+        340
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mongoDb": {
+          "id": "BV59xVNWHYTv5MO1",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "findOneAndUpdate",
+        "collection": "discordMessage",
+        "updateKey": "=key",
+        "fields": "channel,lastMessage,content",
+        "options": {}
+      },
+      "id": "2b95626b-bcb6-49b1-8176-71bfd3d5f41a",
+      "name": "MongoDB",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        320
+      ],
+      "credentials": {
+        "mongoDb": {
+          "id": "BV59xVNWHYTv5MO1",
+          "name": "MongoDB account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-04-10T13:52:08.061Z",
+  "versionId": "8be19b9b-6c4e-4f22-abfc-ddad22beee01"
+}
