@@ -1,0 +1,93 @@
+{
+  "active": true,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-06-23T09:48:37.581Z",
+  "id": "uf1igD0PZO8QrT9o",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Scheduler",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 3
+            }
+          ]
+        }
+      },
+      "id": "40e0d424-d576-4da5-ad8a-06c770675baf",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        420,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://habitica.com/api/v3/user/webhook",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "e5f62d25-d064-46a8-98ad-40938130d7fd"
+            },
+            {
+              "name": "x-api-user",
+              "value": "07e86bcf-d295-4908-a393-6762b622a1b3"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "https://n8n.devesharp.com/webhook/habitica-rpg"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "afa6186d-4294-4e93-bf71-fcdd1b8c7321",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-06-23T09:48:56.951Z",
+  "versionId": "63d4048d-5920-43d1-b7de-156a18538767"
+}
