@@ -1,0 +1,87 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "ClickUp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-02-12T23:47:55.832Z",
+  "id": "n4qnpGS1meOTGQEn",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Suporte Coruja",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "suporte-fabio",
+        "options": {}
+      },
+      "id": "285152f0-f53f-4a4e-947f-3dd39f33c4d4",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        260,
+        300
+      ],
+      "webhookId": "2a203367-0069-493b-993b-582d28f7a8c2"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "team": "9007023941",
+        "space": "90130439736",
+        "folderless": true,
+        "list": "901302028894",
+        "name": "={{ $json.body.Cliente + \" - \" +  $json.body.Problema}}",
+        "additionalFields": {
+          "assignees": [
+            55064332
+          ],
+          "content": "=##**Cliente ** \n{{ $json.body.Cliente  + '\\n' }} \n\n##**Problema ** \n{{ ($json[\"body\"][\"Descrição do Problema\"] ? $json[\"body\"][\"Descrição do Problema\"] : $json[\"body\"][\"Problema\"])  + '\\n' }} \n\n##**Solução: ** \n{{ $json[\"body\"][\"Solução\"] }}\n\n##**Adicional: ** \n{{ $json[\"body\"][\"Adicional\"] ?$json[\"body\"][\"Adicional\"] : \"\"  }}",
+          "markdownContent": true
+        }
+      },
+      "id": "4e98ab69-9567-4018-853c-b085a52410c2",
+      "name": "ClickUp",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        480,
+        300
+      ],
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "FiRYg3L9fuPFrJro",
+          "name": "ClickUp account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-02-13T17:15:27.411Z",
+      "updatedAt": "2024-02-13T17:15:27.411Z",
+      "id": "rIpESLHuqaCh72Rz",
+      "name": "coruja"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2024-02-13T18:30:00.869Z",
+  "versionId": "0e81779e-7516-4b8d-88ba-0c459982eba2"
+}
