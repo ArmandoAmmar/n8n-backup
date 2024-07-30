@@ -1,0 +1,232 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-03-11T13:33:08.216Z",
+  "id": "kHpfpLYwMEQNPmM9",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "fe3cf7e8-185d-43e9-a96d-9f281fdcd695",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://dicionario.priberam.org/DoDiaRSS.aspx",
+        "options": {}
+      },
+      "id": "877f0dc1-5bdf-4782-895e-2c82cce7bb4b",
+      "name": "RSS Read",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [
+        420,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var html = $('RSS Read').item.json.content;\n\n// Função para extrair o conteúdo de uma tag com uma determinada classe\nfunction extrairConteudo(html, classe) {\n    const regex = new RegExp(`<div[^>]*class=\"${classe}\"[^>]*>(.*?)<\\/div>`);\n    const correspondencia = html.match(regex);\n    return correspondencia ? correspondencia[1].trim() : null;\n}\n\n// Extrair conteúdo da classe 'varpb'\nconst varpbText = extrairConteudo(html, 'varpb');\n\n// Extrair conteúdo da classe 'dp-definicao-linha'\nconst definicaoLinhaText = extrairConteudo(html, 'dp-definicao-linha');\n\nreturn [{teste: definicaoLinhaText}];"
+      },
+      "id": "82fe6941-8267-4ef4-8dbe-3652468a7210",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "stringValue": "={{ $('RSS Read').item.json.contentSnippet }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1d779ab8-6977-4ed3-908e-9f2bc9da8839",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        860,
+        280
+      ]
+    }
+  ],
+  "pinData": {
+    "RSS Read": [
+      {
+        "json": {
+          "title": "lectistérnio",
+          "link": "https://dicionario.priberam.org/?pal=lectistérnio",
+          "pubDate": "11 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">lectistérnio</span><span class=\"varpb\">lectistérnio</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">lec·tis·tér·ni·o</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"\">nome masculino</span></h4>\n      <p class=\"ml-12 py-4 dp-definicao-linha\"><span class=\"varpt\"></span><span class=\"ml-4 p\">Rito expiatório, na Roma antiga, que consistia em levantar nos templos mesas e leitos onde se colocavam as imagens dos deuses para lhes servir um banquete.</span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\">latim <i>lectisternium, -ii</i>.\n        </span></div>\n    </div>\n    <div id=\"aa62033\"><script defer>\n        $(function() {verificaRelacionadasDef(62033, \"lectistérnio\",\"lectistérnio6203328-02-202228-02-202228-02-2022T22:37:39lectistérniolectistérniolatim lectisternium, -ii0lectistérniolectistérniolectistérniolectistérniolec.tis.tér.ni.olec.tis.tér.ni.olec.tis.tér.ni.olec.tis.tér.ni.olec.tis.tér.ni.o0n. m.Hist.Rito expiatório, na Roma antiga, que consistia em levantar nos templos mesas e leitos onde se colocavam as imagens dos deuses para lhes servir um banquete.0nome masculinoHistórias. m.substantivo masculinoHist.Históriaceiilnorstté\",\"#aa62033\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "lectistérniolectistérnio\n\nlec·tis·tér·ni·o \n          )\n        \nnome masculino\nRito expiatório, na Roma antiga, que consistia em levantar nos templos mesas e leitos onde se colocavam as imagens dos deuses para lhes servir um banquete.\nOrigem etimológica:latim lectisternium, -ii.\n        \n\n        $(function() {verificaRelacionadasDef(62033, \"lectistérnio\",\"lectistérnio6203328-02-202228-02-202228-02-2022T22:37:39lectistérniolectistérniolatim lectisternium, -ii0lectistérniolectistérniolectistérniolectistérniolec.tis.tér.ni.olec.tis.tér.ni.olec.tis.tér.ni.olec.tis.tér.ni.olec.tis.tér.ni.o0n. m.Hist.Rito expiatório, na Roma antiga, que consistia em levantar nos templos mesas e leitos onde se colocavam as imagens dos deuses para lhes servir um banquete.0nome masculinoHistórias. m.substantivo masculinoHist.Históriaceiilnorstté\",\"#aa62033\");})",
+          "guid": "2024311",
+          "isoDate": "2024-03-11T00:00:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "title": "jandaia",
+          "link": "https://dicionario.priberam.org/?pal=jandaia",
+          "pubDate": "10 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">jandaia</span><span class=\"varpb\">jandaia</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">jan·dai·a</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"\">nome feminino</span></h4>\n      <p class=\"ml-12 py-4 dp-definicao-linha\"><span class=\"varpt\"></span><span class=\"ml-4 p\">Designação dada a várias aves psitaciformes da família dos psitacídeos, em especial do <pt>género</pt><i> Aratinga</i>, de plumagem de coloração viva, em geral laranja, amarela e verde.</span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\">tupi <i>ya'ndaya</i>.\n        </span></div>\n    </div>\n    <div id=\"aa60585\"><script defer>\n        $(function() {verificaRelacionadasDef(60585, \"jandaia\",\"jandaia6058522-02-202422-02-202422-02-2024T12:57:27jandaiajandaiatupi ya'ndaya0jandaiajandaiajandaiajandaiajan.dai.ajan.dai.ajan.dai.ajan.dai.ajan.dai.a0n. f.Ornit.Designação dada a várias aves psitaciformes da família dos psitacídeos, em especial do génerogênero Aratinga, de plumagem de coloração viva, em geral laranja, amarela e verde.0nome femininoOrnitologias. f.substantivo femininoOrnit.Ornitologiaaaadijn\",\"#aa60585\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "jandaiajandaia\n\njan·dai·a \n          )\n        \nnome feminino\nDesignação dada a várias aves psitaciformes da família dos psitacídeos, em especial do \ngénero\n Aratinga, de plumagem de coloração viva, em geral laranja, amarela e verde.\nOrigem etimológica:tupi ya'ndaya.\n        \n\n        $(function() {verificaRelacionadasDef(60585, \"jandaia\",\"jandaia6058522-02-202422-02-202422-02-2024T12:57:27jandaiajandaiatupi ya'ndaya0jandaiajandaiajandaiajandaiajan.dai.ajan.dai.ajan.dai.ajan.dai.ajan.dai.a0n. f.Ornit.Designação dada a várias aves psitaciformes da família dos psitacídeos, em especial do génerogênero Aratinga, de plumagem de coloração viva, em geral laranja, amarela e verde.0nome femininoOrnitologias. f.substantivo femininoOrnit.Ornitologiaaaadijn\",\"#aa60585\");})",
+          "guid": "2024310",
+          "isoDate": "2024-03-10T00:00:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "title": "inab-rogável",
+          "link": "https://dicionario.priberam.org/?pal=inab-rogável",
+          "pubDate": "9 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">inab-rogável</span><span class=\"varpb\">inab-rogável</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">i·nab·-ro·gá·vel</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"aAO dp-categoria-ext-aAO\">adjectivo de dois géneros</span></h4>\n      <p class=\"ml-12 py-4 dp-definicao-linha\"><span class=\"varpt\"></span><span class=\"ml-4 p\">Que não se pode ab-rogar ou anular (ex.: <i>direito inab-rogável</i>).\n              ≠\n              <span class=\"dp-versaletes\">AB-ROGÁVEL</span></span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\"><i>in- + ab-rogável</i>.\n        </span></div>\n      <div class=\"varpb mt-12\">\n        <div class=\"dp-seccao-icon\"><img src=\"/img/dicionario_icon_check.svg\" alt=\"visto\" width=\"20\" height=\"20\" class=\"mr-8\"><span class=\"p t-nowrap\"><morfologia_pb>Plural: inab-rogáveis.</morfologia_pb></span></div>\n      </div>\n      <div class=\"varpt\">\n        <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_check.svg\" alt=\"icon\" width=\"20\" height=\"20\" class=\"mr-8\"><span class=\"p t-nowrap\">Plural: inab-rogáveis.</span></div>\n      </div>\n    </div>\n    <div id=\"aa684489\"><script defer>\n        $(function() {verificaRelacionadasDef(684489, \"inab-rogável\",\"inab-rogável68448922-02-202422-02-202422-02-2024T12:50:03inab-rogávelinab-rogávelin- + ab-rogável0Plural: inab-rogáveis.Plural: inab-rogáveis.inab-rogávelinab-rogávelinab-rogávelinab-rogáveli.nab.-ro.gá.veli.nab.-ro.gá.veli.nab.-ro.gá.veli.nab.-ro.gá.veli.nab.-ro.gá.vel0adj. 2 g.Dir.Que não se pode ab-rogar ou anular (ex.: direito inab-rogável).ab-rogável0adjectivo de dois génerosadjetivo de dois génerosDireitoadj. 2 g.adjetivo de dois gênerosDir.Direito-abegilnorvá\",\"#aa684489\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "inab-rogávelinab-rogável\n\ni·nab·-ro·gá·vel \n          )\n        \nadjectivo de dois géneros\nQue não se pode ab-rogar ou anular (ex.: direito inab-rogável).\n              ≠\n              AB-ROGÁVEL\nOrigem etimológica:in- + ab-rogável.\n        \nPlural: inab-rogáveis.\nPlural: inab-rogáveis.\n\n        $(function() {verificaRelacionadasDef(684489, \"inab-rogável\",\"inab-rogável68448922-02-202422-02-202422-02-2024T12:50:03inab-rogávelinab-rogávelin- + ab-rogável0Plural: inab-rogáveis.Plural: inab-rogáveis.inab-rogávelinab-rogávelinab-rogávelinab-rogáveli.nab.-ro.gá.veli.nab.-ro.gá.veli.nab.-ro.gá.veli.nab.-ro.gá.veli.nab.-ro.gá.vel0adj. 2 g.Dir.Que não se pode ab-rogar ou anular (ex.: direito inab-rogável).ab-rogável0adjectivo de dois génerosadjetivo de dois génerosDireitoadj. 2 g.adjetivo de dois gênerosDir.Direito-abegilnorvá\",\"#aa684489\");})",
+          "guid": "202439",
+          "isoDate": "2024-03-09T00:00:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "title": "homilético",
+          "link": "https://dicionario.priberam.org/?pal=homilético",
+          "pubDate": "8 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">homilético</span><span class=\"varpb\">homilético</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">ho·mi·lé·ti·co</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"aAO dp-categoria-ext-aAO\">adjectivo</span></h4>\n      <p class=\"ml-12 py-4 dp-definicao-linha\"><span class=\"varpt\"></span><span class=\"ml-4 p\">Relativo a homilética ou à <pt>eloquência</pt> dos sermões religiosos (ex.: <i>entusiasmo homilético; reflexão homilética</i>).</span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\">grego <i>homiletikós, -ê, -ón</i>, afável, sociável, social.\n        </span></div>\n    </div>\n    <div id=\"aa105806\"><script defer>\n        $(function() {verificaRelacionadasDef(105806, \"homilético\",\"homilético10580622-02-202422-02-202422-02-2024T12:47:24homiléticohomiléticogrego homiletikós, -ê, -ón, afável, sociável, social0homiléticohomiléticohomiléticohomiléticoho.mi.lé.ti.coho.mi.lé.ti.coho.mi.lé.ti.coho.mi.lé.ti.coho.mi.lé.ti.co0adj.Relig.Relativo a homilética ou à eloquênciaeloqüênciaeloquência dos sermões religiosos (ex.: entusiasmo homilético; reflexão homilética).0adjectivoadjetivoReligiãoadj.adjetivoRelig.Religiãochiilmooté\",\"#aa105806\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "homiléticohomilético\n\nho·mi·lé·ti·co \n          )\n        \nadjectivo\nRelativo a homilética ou à \neloquência\n dos sermões religiosos (ex.: entusiasmo homilético; reflexão homilética).\nOrigem etimológica:grego homiletikós, -ê, -ón, afável, sociável, social.\n        \n\n        $(function() {verificaRelacionadasDef(105806, \"homilético\",\"homilético10580622-02-202422-02-202422-02-2024T12:47:24homiléticohomiléticogrego homiletikós, -ê, -ón, afável, sociável, social0homiléticohomiléticohomiléticohomiléticoho.mi.lé.ti.coho.mi.lé.ti.coho.mi.lé.ti.coho.mi.lé.ti.coho.mi.lé.ti.co0adj.Relig.Relativo a homilética ou à eloquênciaeloqüênciaeloquência dos sermões religiosos (ex.: entusiasmo homilético; reflexão homilética).0adjectivoadjetivoReligiãoadj.adjetivoRelig.Religiãochiilmooté\",\"#aa105806\");})",
+          "guid": "202438",
+          "isoDate": "2024-03-08T00:00:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "title": "guarita",
+          "link": "https://dicionario.priberam.org/?pal=guarita",
+          "pubDate": "7 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">guarita</span><span class=\"varpb\">guarita</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">gua·ri·ta</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <div class=\"dp-definicao-cartao\"><img height=\"80\" alt=\"Imagem\" src=\"&#xA;          https://dicionario.priberam.org/images/dplp/guarita.jpg\"><div class=\"dp-definicao-cartao__descricao\">\n          <h2 class=\"--micro\"><span class=\"varpt\"></span></h2>\n          <h2 class=\"--micro\"></h2>\n          <p>Torre, nos ângulos dos antigos baluartes.</p>\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"\">nome feminino</span></h4>\n      <p class=\"py-4 dp-definicao-linha\"><span class=\"ml-12 h6 --pequeno\">1.\n          </span><span class=\"varpt\"></span><span class=\"ml-4 p\">Torre, nos ângulos dos antigos baluartes.</span></p>\n      <p class=\"py-4 dp-definicao-linha\"><span class=\"ml-12 h6 --pequeno\">2.\n          </span><span class=\"ml-4 p\">Pequeno abrigo onde se recolhem as sentinelas.</span></p>\n      <p class=\"py-4 dp-definicao-linha\"><span class=\"ml-12 h6 --pequeno\">3.\n          </span><span class=\"ml-4 p\">Cabina destinada aos vigias, à margem <pt>dos caminhos-de-ferro</pt>.</span></p>\n      <p class=\"py-4 dp-definicao-linha\"><span class=\"ml-12 h6 --pequeno\">4.\n          </span><span class=\"varpt\"></span><span class=\"ml-4 p\"><pt>Baiuca</pt>, taberna.</span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\">francês antigo <i>garite</i> ou <i>guarite</i>, hoje francês <i>guérite</i>.\n        </span></div>\n    </div>\n    <div class=\"my-12 d-flex\"><img src=\"/img/dicionario_icon_notes_small.svg\" width=\"20\" height=\"20\" class=\"mr-8\"><span class=\"p def\">Confrontar: guarida.</span></div>\n    <div id=\"aa55370\"><script defer>\n        $(function() {verificaRelacionadasDef(55370, \"guarita\",\"guarita5537023-01-202423-01-202423-01-2024T15:06:32guaritaguaritafrancês antigo garite ou guarite, hoje francês guérite0Confrontar: guarida.guaritaguaritaguaritaguaritagua.ri.tagua.ri.tagua.ri.tagua.ri.tagua.ri.ta0n. f.Arquit.Torre, nos ângulos dos antigos baluartes.0guarita.jpgnome femininoArquitecturaArquiteturas. f.substantivo femininoArquit.ArquiteturaPequeno abrigo onde se recolhem as sentinelas.1guarita1.jpgCabina destinada aos vigias, à margem dos caminhos-de-ferrodas estradas de ferro.2Ant.BaiucaBaiúcaBaiuca, taberna.3AntigoAnt.Antigoaagirtu\",\"#aa55370\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "guaritaguarita\n\ngua·ri·ta \n          )\n        \n\n\n\n          \nTorre, nos ângulos dos antigos baluartes.\nnome feminino\n1.\n          Torre, nos ângulos dos antigos baluartes.\n2.\n          Pequeno abrigo onde se recolhem as sentinelas.\n3.\n          Cabina destinada aos vigias, à margem \ndos caminhos-de-ferro\n.\n4.\n          \nBaiuca\n, taberna.\nOrigem etimológica:francês antigo garite ou guarite, hoje francês guérite.\n        \nConfrontar: guarida.\n\n        $(function() {verificaRelacionadasDef(55370, \"guarita\",\"guarita5537023-01-202423-01-202423-01-2024T15:06:32guaritaguaritafrancês antigo garite ou guarite, hoje francês guérite0Confrontar: guarida.guaritaguaritaguaritaguaritagua.ri.tagua.ri.tagua.ri.tagua.ri.tagua.ri.ta0n. f.Arquit.Torre, nos ângulos dos antigos baluartes.0guarita.jpgnome femininoArquitecturaArquiteturas. f.substantivo femininoArquit.ArquiteturaPequeno abrigo onde se recolhem as sentinelas.1guarita1.jpgCabina destinada aos vigias, à margem dos caminhos-de-ferrodas estradas de ferro.2Ant.BaiucaBaiúcaBaiuca, taberna.3AntigoAnt.Antigoaagirtu\",\"#aa55370\");})",
+          "guid": "202437",
+          "isoDate": "2024-03-07T00:00:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "title": "faticeira",
+          "link": "https://dicionario.priberam.org/?pal=faticeira",
+          "pubDate": "6 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">faticeira</span><span class=\"varpb\">faticeira</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">fa·ti·cei·ra</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"\">nome feminino</span></h4>\n      <p class=\"py-4 dp-definicao-linha\"><span class=\"ml-12 h6 --pequeno\">1.\n          </span><span class=\"varpt\"></span><span class=\"ml-4 p\">Peixe marítimo parecido com o cação.</span></p>\n      <p class=\"py-4 dp-definicao-linha\"><span class=\"ml-12 h6 --pequeno\">2.\n          </span><span class=\"varpt\"></span><span class=\"varpt\"></span><span class=\"ml-4 p\">Rede empregada pelos pescadores do Douro na pesca da solha, do linguado, etc.</span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\">alteração de <i>*fataceira</i>, de <i>fataça + -eira</i>.\n        </span></div>\n    </div>\n    <div class=\"my-12 d-flex\"><img src=\"/img/dicionario_icon_notes_small.svg\" width=\"20\" height=\"20\" class=\"mr-8\"><span class=\"p def\">Confrontar: feiticeira.</span></div>\n    <div class=\"my-12 dp-seccao-icon def\"><img src=\"/img/dicionario_icon_group.svg\" width=\"20\" height=\"20\" class=\"mr-8\"><span class=\"p varpt\"><span class=\"p aAO\">Colectivo:</span><span class=\"dAO\">Coletivo:</span></span><span class=\"p varpb\">Coletivo:</span><span class=\"ml-8 p\">cardume.\n        </span></div>\n    <div id=\"aa49765\"><script defer>\n        $(function() {verificaRelacionadasDef(49765, \"faticeira\",\"faticeira4976522-02-202422-02-202422-02-2024T12:47:06faticeirafaticeiraalteração de *fataceira, de fataça + -eira0Confrontar: feiticeira.faticeirafaticeirafaticeirafaticeirafa.ti.cei.rafa.ti.cei.rafa.ti.cei.rafa.ti.cei.rafa.ti.cei.racardume0n. f.Ictiol.Peixe marítimo parecido com o cação.0nome femininoIctiologias. f.substantivo femininoIctiol.IctiologiaPesc.Reg.Rede empregada pelos pescadores do Douro na pesca da solha, do linguado, etc.1PescaRegionalismoPesc.PescaReg.Regionalismoaacefiirt\",\"#aa49765\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "faticeirafaticeira\n\nfa·ti·cei·ra \n          )\n        \nnome feminino\n1.\n          Peixe marítimo parecido com o cação.\n2.\n          Rede empregada pelos pescadores do Douro na pesca da solha, do linguado, etc.\nOrigem etimológica:alteração de *fataceira, de fataça + -eira.\n        \nConfrontar: feiticeira.\nColectivo:Coletivo:Coletivo:cardume.\n        \n\n        $(function() {verificaRelacionadasDef(49765, \"faticeira\",\"faticeira4976522-02-202422-02-202422-02-2024T12:47:06faticeirafaticeiraalteração de *fataceira, de fataça + -eira0Confrontar: feiticeira.faticeirafaticeirafaticeirafaticeirafa.ti.cei.rafa.ti.cei.rafa.ti.cei.rafa.ti.cei.rafa.ti.cei.racardume0n. f.Ictiol.Peixe marítimo parecido com o cação.0nome femininoIctiologias. f.substantivo femininoIctiol.IctiologiaPesc.Reg.Rede empregada pelos pescadores do Douro na pesca da solha, do linguado, etc.1PescaRegionalismoPesc.PescaReg.Regionalismoaacefiirt\",\"#aa49765\");})",
+          "guid": "202436",
+          "isoDate": "2024-03-06T00:00:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "title": "esbeijadeira",
+          "link": "https://dicionario.priberam.org/?pal=esbeijadeira",
+          "pubDate": "5 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">esbeijadeira</span><span class=\"varpb\">esbeijadeira</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">es·bei·ja·dei·ra</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <div class=\"dp-definicao-cartao\"><img height=\"80\" alt=\"Imagem\" src=\"&#xA;          https://dicionario.priberam.org/images/dplp/peneira.jpg\"><div class=\"dp-definicao-cartao__descricao\">\n          <h2 class=\"--micro\"><span class=\"varpt\"></span></h2>\n          <h2 class=\"--micro\"></h2>\n          <p>Utensílio circular com fundo de seda, crina ou palhinha entrançada para peneirar farinha ou outras substâncias.</p>\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"\">nome feminino</span></h4>\n      <p class=\"ml-12 py-4 dp-definicao-linha\"><span class=\"varpt\"></span><span class=\"ml-4 p\">Utensílio circular com fundo de seda, crina ou palhinha entrançada para peneirar farinha ou outras substâncias.\n              =\n              <span class=\"dp-versaletes\"><small>PENEIRA</small></span></span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\"><i>esbeijar + -deira</i>.\n        </span></div>\n    </div>\n    <div id=\"aa45079\"><script defer>\n        $(function() {verificaRelacionadasDef(45079, \"esbeijadeira\",\"esbeijadeira4507922-02-202422-02-202422-02-2024T12:15:17esbeijadeiraesbeijadeiraesbeijar + -deira0esbeijadeiraesbeijadeiraesbeijadeiraesbeijadeiraes.bei.ja.dei.raes.bei.ja.dei.raes.bei.ja.dei.raes.bei.ja.dei.raes.bei.ja.dei.ra0n. f.Trás-os-M.Utensílio circular com fundo de seda, crina ou palhinha entrançada para peneirar farinha ou outras substâncias.peneira0peneira.jpgnome femininoPortugal: Trás-os-Montess. f.substantivo femininoPort. Trás-os-M.Portugal: Trás-os-Montesaabdeeeiijrs\",\"#aa45079\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "esbeijadeiraesbeijadeira\n\nes·bei·ja·dei·ra \n          )\n        \n\n\n\n          \nUtensílio circular com fundo de seda, crina ou palhinha entrançada para peneirar farinha ou outras substâncias.\nnome feminino\nUtensílio circular com fundo de seda, crina ou palhinha entrançada para peneirar farinha ou outras substâncias.\n              =\n              PENEIRA\nOrigem etimológica:esbeijar + -deira.\n        \n\n        $(function() {verificaRelacionadasDef(45079, \"esbeijadeira\",\"esbeijadeira4507922-02-202422-02-202422-02-2024T12:15:17esbeijadeiraesbeijadeiraesbeijar + -deira0esbeijadeiraesbeijadeiraesbeijadeiraesbeijadeiraes.bei.ja.dei.raes.bei.ja.dei.raes.bei.ja.dei.raes.bei.ja.dei.raes.bei.ja.dei.ra0n. f.Trás-os-M.Utensílio circular com fundo de seda, crina ou palhinha entrançada para peneirar farinha ou outras substâncias.peneira0peneira.jpgnome femininoPortugal: Trás-os-Montess. f.substantivo femininoPort. Trás-os-M.Portugal: Trás-os-Montesaabdeeeiijrs\",\"#aa45079\");})",
+          "guid": "202435",
+          "isoDate": "2024-03-05T00:00:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "title": "datil",
+          "link": "https://dicionario.priberam.org/?pal=datil",
+          "pubDate": "4 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">datil</span><span class=\"varpb\">datil</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">da·til</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <div class=\"dp-definicao-cartao\"><img height=\"80\" alt=\"Imagem\" src=\"&#xA;          https://dicionario.priberam.org/images/dplp/tamara.jpg\"><div class=\"dp-definicao-cartao__descricao\">\n          <h2 class=\"--micro\"><span class=\"varpt\"></span></h2>\n          <h2 class=\"--micro\"></h2>\n          <p>Fruto da tamareira.</p>\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"\">nome masculino</span></h4>\n      <p class=\"ml-12 py-4 dp-definicao-linha\"><span class=\"varpt\"></span><span class=\"ml-4 p\">Fruto da tamareira.\n              =\n              <span class=\"dp-versaletes\"><small>TÂMARA</small></span></span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\">espanhol <i>dátil</i>, do latim <i>dactylus, -i</i>, do grego <i>dáktulos, -ou</i>, dedo.\n        </span></div>\n      <div class=\"varpb mt-12\">\n        <div class=\"dp-seccao-icon\"><img src=\"/img/dicionario_icon_check.svg\" alt=\"visto\" width=\"20\" height=\"20\" class=\"mr-8\"><span class=\"p t-nowrap\"><morfologia_pb>Plural: datiles ou datis.</morfologia_pb></span></div>\n      </div>\n      <div class=\"varpt\">\n        <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_check.svg\" alt=\"icon\" width=\"20\" height=\"20\" class=\"mr-8\"><span class=\"p t-nowrap\">Plural: datiles ou datis.</span></div>\n      </div>\n    </div>\n    <div id=\"aa35931\"><script defer>\n        $(function() {verificaRelacionadasDef(35931, \"datil\",\"datil3593123-01-202423-01-202423-01-2024T15:29:34datildatilespanhol dátil, do latim dactylus, -i, do grego dáktulos, -ou, dedo0Plural: datiles ou datis.Plural: datiles ou datis.datildatildatildatilda.tilda.tilda.tilda.tilda.til0n. m.Bot.Fruto da tamareira.tâmara0tamara.jpgnome masculinoBotânicas. m.substantivo masculinoBot.Botânicaadilt\",\"#aa35931\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "datildatil\n\nda·til \n          )\n        \n\n\n\n          \nFruto da tamareira.\nnome masculino\nFruto da tamareira.\n              =\n              TÂMARA\nOrigem etimológica:espanhol dátil, do latim dactylus, -i, do grego dáktulos, -ou, dedo.\n        \nPlural: datiles ou datis.\nPlural: datiles ou datis.\n\n        $(function() {verificaRelacionadasDef(35931, \"datil\",\"datil3593123-01-202423-01-202423-01-2024T15:29:34datildatilespanhol dátil, do latim dactylus, -i, do grego dáktulos, -ou, dedo0Plural: datiles ou datis.Plural: datiles ou datis.datildatildatildatilda.tilda.tilda.tilda.tilda.til0n. m.Bot.Fruto da tamareira.tâmara0tamara.jpgnome masculinoBotânicas. m.substantivo masculinoBot.Botânicaadilt\",\"#aa35931\");})",
+          "guid": "202434",
+          "isoDate": "2024-03-04T00:00:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "title": "calepino",
+          "link": "https://dicionario.priberam.org/?pal=calepino",
+          "pubDate": "3 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">calepino</span><span class=\"varpb\">calepino</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">ca·le·pi·no</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"\">nome masculino</span></h4>\n      <p class=\"py-4 dp-definicao-linha\"><span class=\"ml-12 h6 --pequeno\">1.\n          </span><span class=\"ml-4 p\"><pt><span class=\"aAO\"><aAO>Colecção</aAO></span></pt> de palavras ordenadas.\n              =\n              <span class=\"dp-versaletes\"><small>DICIONÁRIO, LÉXICO, VOCABULÁRIO</small></span></span></p>\n      <p class=\"py-4 dp-definicao-linha\"><span class=\"ml-12 h6 --pequeno\">2.\n          </span><span class=\"ml-4 p\"><pt><span class=\"aAO\"><aAO>Colecção</aAO></span></pt> de apontamentos que alguém faz para uso próprio.</span></p>\n      <p class=\"py-4 dp-definicao-linha\"><span class=\"ml-12 h6 --pequeno\">3.\n          </span><span class=\"ml-4 p\">Livro de lembranças.\n              =\n              <span class=\"dp-versaletes\"><small>AGENDA</small></span></span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\">italiano <i>calepino</i>, de <i>[Ambrogio] Calepio</i> ou <i>Calepino</i>, <pt>antropónimo</pt> [humanista e religioso augustiniano italiano, cerca de 1440-cerca de 1510].\n        </span></div>\n    </div>\n    <div id=\"aa27047\"><script defer>\n        $(function() {verificaRelacionadasDef(27047, \"calepino\",\"calepino2704722-02-202422-02-202422-02-2024T12:15:08calepinocalepinoitaliano calepino, de [Ambrogio] Calepio ou Calepino, antropónimoantropônimo [humanista e religioso augustiniano italiano, cerca de 1440-cerca de 1510]0calepinocalepinocalepinocalepinoca.le.pi.noca.le.pi.noca.le.pi.noca.le.pi.noca.le.pi.no0n. m.ColecçãoColeçãoColeção de palavras ordenadas.dicionário, léxico, vocabulário0nome masculinos. m.substantivo masculinoColecçãoColeçãoColeção de apontamentos que alguém faz para uso próprio.1Livro de lembranças.agenda2aceilnop\",\"#aa27047\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "calepinocalepino\n\nca·le·pi·no \n          )\n        \nnome masculino\n1.\n          \nColecção\n de palavras ordenadas.\n              =\n              DICIONÁRIO, LÉXICO, VOCABULÁRIO\n2.\n          \nColecção\n de apontamentos que alguém faz para uso próprio.\n3.\n          Livro de lembranças.\n              =\n              AGENDA\nOrigem etimológica:italiano calepino, de [Ambrogio] Calepio ou Calepino, \nantropónimo\n [humanista e religioso augustiniano italiano, cerca de 1440-cerca de 1510].\n        \n\n        $(function() {verificaRelacionadasDef(27047, \"calepino\",\"calepino2704722-02-202422-02-202422-02-2024T12:15:08calepinocalepinoitaliano calepino, de [Ambrogio] Calepio ou Calepino, antropónimoantropônimo [humanista e religioso augustiniano italiano, cerca de 1440-cerca de 1510]0calepinocalepinocalepinocalepinoca.le.pi.noca.le.pi.noca.le.pi.noca.le.pi.noca.le.pi.no0n. m.ColecçãoColeçãoColeção de palavras ordenadas.dicionário, léxico, vocabulário0nome masculinos. m.substantivo masculinoColecçãoColeçãoColeção de apontamentos que alguém faz para uso próprio.1Livro de lembranças.agenda2aceilnop\",\"#aa27047\");})",
+          "guid": "202433",
+          "isoDate": "2024-03-03T00:00:00.000Z"
+        }
+      },
+      {
+        "json": {
+          "title": "bífero",
+          "link": "https://dicionario.priberam.org/?pal=bífero",
+          "pubDate": "2 Mar 2024",
+          "content": "<div>\n  <div>\n    <div class=\"dp-definicao\">\n      <div class=\"verbeteh1\">\n        <div class=\"dp-definicao-header\">\n          <div><span class=\"varpt\">bífero</span><span class=\"varpb\">bífero</span></div><span class=\"h6 varpt\"><span></span></span></div>\n        <div class=\"p dp-divisao-silabica\">\n          (\n          <span class=\"varpt\"><span class=\"titpalavra\">bí·fe·ro</span> <span class=\"varpt\"></span></span>\n          )\n        </div>\n      </div>\n      <h4 style=\"\" class=\"varpt ml-12 pt-12 pb-4 --pequeno\"><br><span class=\"aAO dp-categoria-ext-aAO\">adjectivo</span></h4>\n      <p class=\"ml-12 py-4 dp-definicao-linha\"><span class=\"varpt\"></span><span class=\"ml-4 p\">Que dá fruto duas vezes por ano (ex.: <i>figueira bífera</i>).</span></p>\n      <div class=\"my-12 dp-seccao-icon\"><img src=\"/img/dicionario_icon_etimology.svg\" width=\"20\" height=\"20\" class=\"mr-8\" alt=\"etimologia\"><span class=\"p t-nowrap\">Origem etimológica:</span><span class=\"ml-8 def p\">latim <i>bifer, -era, -erum</i>, que produz duas vezes por ano.\n        </span></div>\n    </div>\n    <div id=\"aa24380\"><script defer>\n        $(function() {verificaRelacionadasDef(24380, \"bífero\",\"bífero2438021-09-202021-09-202021-09-2020T17:31:44bíferobíferolatim bifer, -era, -erum, que produz duas vezes por ano0bíferobíferobíferobíferobí.fe.robí.fe.robí.fe.robí.fe.robí.fe.ro0adj.Bot.Que dá fruto duas vezes por ano (ex.: figueira bífera).0adjectivoadjetivoBotânicaadj.adjetivoBot.Botânicabeforí\",\"#aa24380\");})\n      </script></div>\n  </div>\n</div>",
+          "contentSnippet": "bíferobífero\n\nbí·fe·ro \n          )\n        \nadjectivo\nQue dá fruto duas vezes por ano (ex.: figueira bífera).\nOrigem etimológica:latim bifer, -era, -erum, que produz duas vezes por ano.\n        \n\n        $(function() {verificaRelacionadasDef(24380, \"bífero\",\"bífero2438021-09-202021-09-202021-09-2020T17:31:44bíferobíferolatim bifer, -era, -erum, que produz duas vezes por ano0bíferobíferobíferobíferobí.fe.robí.fe.robí.fe.robí.fe.robí.fe.ro0adj.Bot.Que dá fruto duas vezes por ano (ex.: figueira bífera).0adjectivoadjetivoBotânicaadj.adjetivoBot.Botânicabeforí\",\"#aa24380\");})",
+          "guid": "202432",
+          "isoDate": "2024-03-02T00:00:00.000Z"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-03-12T00:23:16.081Z",
+  "versionId": "c0f7b193-cc6f-4971-9fbf-9652906d6484"
+}
